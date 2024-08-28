@@ -10607,6 +10607,9 @@
   "kubernetes-stubs": [
     "poetry"
   ],
+  "kubernetes-validate": [
+    "setuptools"
+  ],
   "l18n": [
     "setuptools"
   ],
@@ -14878,6 +14881,9 @@
   ],
   "os-service-types": [
     "pbr",
+    "setuptools"
+  ],
+  "os-client-config": [
     "setuptools"
   ],
   "osc": [
