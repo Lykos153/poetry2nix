@@ -78,6 +78,7 @@ let
       checkInputs' = getDeps (pyProject.tool.poetry."dev-dependencies" or { })  # <poetry-1.2.0
         # >=poetry-1.2.0 dependency groups
         ++ lib.flatten (map (g: getDeps (pyProject.tool.poetry.group.${g}.dependencies or { })) checkGroups);
+      allGroups = groups ++ builtins.attrNames (lib.filterAttrs (_: v: v.optional or false) (pyProject.tool.poetry.group or { }));
     in
     {
       buildInputs = mkInput "buildInputs" (if includeBuildSystem then buildSystemPkgs else [ ]);
@@ -85,7 +86,7 @@ let
         getDeps allRawDeps ++ (
           # >=poetry-1.2.0 dependency groups
           if pyProject.tool.poetry.group or { } != { }
-          then lib.flatten (map (g: getDeps pyProject.tool.poetry.group.${g}.dependencies) groups)
+          then lib.flatten (map (g: getDeps pyProject.tool.poetry.group.${g}.dependencies) allGroups)
           else [ ]
         )
       );
